@@ -42,25 +42,26 @@ public class AIMove : MonoBehaviour
         if (Vector2.Distance(transform.position, currentNode.position) < 1.1f)
         {
             inc = true;
-            if (nodeList[nodeNumber].GetComponent<Node>().type == Node.NodeType.JUMP && player.GroundCheck())
-            {
-                player.Jump();
-            }
-            else if(nodeList[nodeNumber].GetComponent<Node>().type == Node.NodeType.COLLECTABLE)
-            {
-                Debug.Log("Collectable");
-                
-            }
-            else if(nodeList[nodeNumber].GetComponent<Node>().type == Node.NodeType.MOVING_PLATFORM)
-            {
-                canMove = false;
-            }
-            else if(nodeList[nodeNumber].GetComponent<Node>().type == Node.NodeType.END)
-            {
-                canMove = false;
-            }
 
+            switch (nodeList[nodeNumber].GetComponent<Node>().type)
+            {
+                case (Node.NodeType.JUMP):
+                    if (player.GroundCheck())
+                    {
+                        player.Jump();
+                    }
+                    break;
+                case(Node.NodeType.COLLECTABLE):
+                    Debug.Log("Collectable");
+                    break;
+                case (Node.NodeType.MOVING_PLATFORM):
+                    canMove = false;
+                    break;
+                case (Node.NodeType.END):
+                    canMove = false;
+                    break;
 
+            };
             if (inc && nodeNumber + 1 < nodeList.Count)
             {
                 nodeNumber++;

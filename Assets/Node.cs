@@ -10,14 +10,34 @@ public class Node : MonoBehaviour
 
     private void Start()
     {
-        if(type == NodeType.JUMP && !GetComponent<JumpCurve>())
+        switch (type)
         {
-            gameObject.AddComponent<JumpCurve>();
-        }
-        else if(type == NodeType.COLLECTABLE && !GetComponent<CollectableNode>())
-        {
-            gameObject.AddComponent<CollectableNode>();
-        }
+            case (NodeType.JUMP):
+
+                if (!GetComponent<JumpCurve>())
+                {
+                    gameObject.AddComponent<JumpCurve>();
+                }
+                break;
+            
+            case (NodeType.COLLECTABLE):
+
+                if (!GetComponent<CollectableNode>())
+                {
+                    gameObject.AddComponent<CollectableNode>();
+                }
+                break;
+
+            case (NodeType.END):
+
+                if (!GetComponent<CollectableNode>())
+                {
+                    gameObject.AddComponent<CollectableNode>();
+                }
+                break;
+
+
+        };
     }
 
 }

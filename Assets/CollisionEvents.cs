@@ -27,7 +27,7 @@ public class CollisionEvents : MonoBehaviour
             Destroy(other.transform.root.gameObject);
         }
 
-        if (other.CompareTag("death"))
+        if (other.CompareTag("death") && GetComponent<AIMove>().enabled == true)
         {
             UnityEditor.EditorApplication.isPlaying = false;
             EditorUtility.DisplayDialog("Message", "Level is not Completable, The AI fell at node " + (GetComponent<AIMove>().nodeNumber - 1).ToString(), "OK");
@@ -36,7 +36,7 @@ public class CollisionEvents : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.CompareTag("finish"))
+        if (other.gameObject.CompareTag("finish") && GetComponent<AIMove>().enabled == true)
         {
             UnityEditor.EditorApplication.isPlaying = false;
             EditorUtility.DisplayDialog("Message", "Level is Completable", "OK");

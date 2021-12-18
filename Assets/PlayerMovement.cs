@@ -62,11 +62,10 @@ public class PlayerMovement : MonoBehaviour
             }
 
         }
-        if (enable)
-        {
-            Friction();
+
+        Friction();
             
-        }
+
         PlayerInput();
     }
 
@@ -183,6 +182,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void Gravity()
     {
+        Mathf.Clamp(vel.y, -100, 100);
         if (!GroundCheck())
         {
             gravity = Mathf.Clamp(gravity, 0, 100);

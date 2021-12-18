@@ -24,7 +24,11 @@ public class EnableAI : MonoBehaviour
     public void ActiavateAI()
     {
         player.GetComponent<AIMove>().enabled = true;
-        GetComponent<Button>().interactable = false;
+    }
+
+    public void DisableAI()
+    {
+        player.GetComponent<AIMove>().enabled = false;
     }
 
     public void ResetPlayer(Transform position)

@@ -5,7 +5,7 @@ using UnityEngine;
 [ExecuteInEditMode]
 public class Node : MonoBehaviour
 {
-    public enum NodeType {JUMP, COLLECTABLE, MOVING_PLATFORM, END};
+    public enum NodeType {JUMP, COLLECTABLE, MOVING_PLATFORM, END, MOVING_PLATFORM_WAIT, RISING};
     public NodeType type;
 
     private void Start()
@@ -33,8 +33,27 @@ public class Node : MonoBehaviour
                 if (!GetComponent<CollectableNode>())
                 {
                     gameObject.AddComponent<CollectableNode>();
+                    
                 }
                 break;
+            case (NodeType.MOVING_PLATFORM):
+                if (!GetComponent<CollectableNode>())
+                {
+                    gameObject.AddComponent<CollectableNode>();
+                }
+                if (!GetComponent<MovingNode>())
+                {
+                    gameObject.AddComponent<MovingNode>();
+                }
+                break;
+            case (NodeType.MOVING_PLATFORM_WAIT):
+                if (!GetComponent<JumpCurve>())
+                {
+                    gameObject.AddComponent<JumpCurve>();
+                }
+                break;
+
+
 
 
         };

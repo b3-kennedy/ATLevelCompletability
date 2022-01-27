@@ -9,17 +9,20 @@ public class AIMove : MonoBehaviour
     public List<Transform> nodeList;
     public float speed;
     public Transform currentNode;
+    GameObject movePlatform;
     public Vector3 dir;
-    [HideInInspector]public int nodeNumber;
+    public int nodeNumber;
     bool canMove = true;
+    bool platform;
+    bool rising;
+    bool platformWait;
     bool inc;
     // Start is called before the first frame update
     void Start()
     {
-        nodeNumber = 0;
         player = GetComponent<PlayerMovement>();
         rb = GetComponent<Rigidbody2D>();
-        currentNode = nodeList[0];
+        currentNode = nodeList[nodeNumber];
     }
 
     // Update is called once per frame
@@ -37,7 +40,6 @@ public class AIMove : MonoBehaviour
             dir = -(transform.position - new Vector3(currentNode.position.x, transform.position.y)).normalized;
         }
        
-        Debug.Log(dir);
 
         if (Vector2.Distance(transform.position, currentNode.position) < 1.1f)
         {
@@ -55,10 +57,21 @@ public class AIMove : MonoBehaviour
                     Debug.Log("Collectable");
                     break;
                 case (Node.NodeType.MOVING_PLATFORM):
-                    canMove = false;
+                    movePlatform = nodeList[nodeNumber + 1].transform.parent.gameObject;
+                    Debug.Log(movePlatform);
+                    if (nodeList[nodeNumber].GetComponent<MovingNode>())
+                    {
+                        platform = true;
+                    }
                     break;
                 case (Node.NodeType.END):
                     canMove = false;
+                    break;
+                case (Node.NodeType.MOVING_PLATFORM_WAIT):
+                    platformWait = true;
+                    break;
+                case (Node.NodeType.RISING):
+                    rising = true;
                     break;
 
             };
@@ -78,9 +91,71 @@ public class AIMove : MonoBehaviour
             }
             
         }
+
+        if (platform)
+        {
+            MovingPlatform();
+        }
+
+        if (platformWait)
+        {
+            PlatformWait();
+        }
+
+        if (rising)
+        {
+            Rising();
+        }
+
+
     }
 
+    void Rising()
+    {
+        Debug.Log(nodeList[nodeNumber].transform.parent);
+        if(nodeList[nodeNumber].transform.parent.GetComponent<Rising>().state == global::Rising.State.UP)
+        {
+            canMove = true;
+            player.Jump();
+            rising = false;
+        }
+        else
+        {
+            canMove = false;
+        }
+    }
 
+    void PlatformWait()
+    {
+        canMove = false;
+        Debug.Log(nodeList[nodeNumber-1]);
+        float dist = Vector2.Distance(nodeList[nodeNumber - 1].position,nodeList[nodeNumber].position);
+        Debug.Log(dist);
+        if(dist < 7)
+        {
+            canMove = true;
+            player.Jump();
+            platformWait = false;
+        }
+        
+    }
+
+    void MovingPlatform()
+    {
+        float dist = Vector2.Distance(nodeList[nodeNumber].GetComponent<JumpCurve>().traj[0], 
+            nodeList[nodeNumber].GetComponent<JumpCurve>().traj[nodeList[nodeNumber].GetComponent<JumpCurve>().traj.Length-1]);
+        if(Vector2.Distance(movePlatform.transform.position, transform.position) < dist)
+        {
+            canMove = true;
+            player.Jump();
+            platform = false;
+        }
+        else
+        {
+            canMove = false;
+        }
+        
+    }
     void Move()
     {
        

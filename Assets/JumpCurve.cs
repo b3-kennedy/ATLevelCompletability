@@ -19,7 +19,6 @@ public class JumpCurve : MonoBehaviour
         player = SpawnPlayer.player;
         initialVel = new Vector3(4, 9);
 
-        Debug.Log("here");
 
         if(player != null)
         {

@@ -833,7 +833,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 424ea85170080994fbd18243851e289a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 0
+  type: 5
 --- !u!1 &429783890
 GameObject:
   m_ObjectHideFlags: 0
@@ -2322,7 +2322,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 424ea85170080994fbd18243851e289a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 0
+  type: 5
 --- !u!1 &1012531734
 GameObject:
   m_ObjectHideFlags: 0
@@ -3966,7 +3966,7 @@ PrefabInstance:
     - target: {fileID: 811530983345586501, guid: a87a2b7016b9cd54196d05973af7f0bd,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.018
+      value: -0.015
       objectReference: {fileID: 0}
     - target: {fileID: 4192762096000919760, guid: a87a2b7016b9cd54196d05973af7f0bd,
         type: 3}
@@ -4124,6 +4124,26 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &1856893658
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1856893654}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ede37022adc2c11439b31c6c72d44e3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  platform:
+    platform: {fileID: 1856893654}
+    startPos: {x: 0, y: 0, z: 0}
+    endPos: {x: 0, y: 0, z: 0}
+  waitTime: 3
+  moveTime: 5
+  startTimer: 0
+  state: 2
 --- !u!1 &1866819443
 GameObject:
   m_ObjectHideFlags: 0
@@ -4154,15 +4174,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   platforms:
-  - platform: {fileID: 2005263384}
-    startPos: {x: 71.51, y: -11.99, z: 0.45}
-    endPos: {x: 71.51, y: -15, z: 0.45}
-  - platform: {fileID: 1856893654}
-    startPos: {x: 78.50817, y: -11.99, z: 0.45}
-    endPos: {x: 78.50817, y: -15, z: 0.45}
-  waitTime: 2
-  moveTime: 1
-  state: 0
+  - {fileID: 2005263384}
+  - {fileID: 1856893654}
 --- !u!4 &1866819445
 Transform:
   m_ObjectHideFlags: 0
@@ -4279,6 +4292,26 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &2005263388
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2005263384}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ede37022adc2c11439b31c6c72d44e3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  platform:
+    platform: {fileID: 0}
+    startPos: {x: 0, y: 0, z: 0}
+    endPos: {x: 0, y: 0, z: 0}
+  waitTime: 3
+  moveTime: 5
+  startTimer: 0
+  state: 2
 --- !u!1 &2054259762
 GameObject:
   m_ObjectHideFlags: 0

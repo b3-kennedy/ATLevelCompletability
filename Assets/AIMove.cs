@@ -58,7 +58,6 @@ public class AIMove : MonoBehaviour
                     break;
                 case (Node.NodeType.MOVING_PLATFORM):
                     movePlatform = nodeList[nodeNumber + 1].transform.parent.gameObject;
-                    Debug.Log(movePlatform);
                     if (nodeList[nodeNumber].GetComponent<MovingNode>())
                     {
                         platform = true;
@@ -128,9 +127,7 @@ public class AIMove : MonoBehaviour
     void PlatformWait()
     {
         canMove = false;
-        Debug.Log(nodeList[nodeNumber-1]);
         float dist = Vector2.Distance(nodeList[nodeNumber - 1].position,nodeList[nodeNumber].position);
-        Debug.Log(dist);
         if(dist < 7)
         {
             canMove = true;
@@ -144,7 +141,7 @@ public class AIMove : MonoBehaviour
     {
         float dist = Vector2.Distance(nodeList[nodeNumber].GetComponent<JumpCurve>().traj[0], 
             nodeList[nodeNumber].GetComponent<JumpCurve>().traj[nodeList[nodeNumber].GetComponent<JumpCurve>().traj.Length-1]);
-        if(Vector2.Distance(movePlatform.transform.position, transform.position) < dist)
+        if(Vector2.Distance(movePlatform.transform.position, transform.position) < dist - 2)
         {
             canMove = true;
             player.Jump();

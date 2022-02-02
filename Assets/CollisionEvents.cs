@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using UnityEngine.SceneManagement;
 
 public class CollisionEvents : MonoBehaviour
 {
@@ -31,6 +32,12 @@ public class CollisionEvents : MonoBehaviour
         {
             UnityEditor.EditorApplication.isPlaying = false;
             EditorUtility.DisplayDialog("Message", "Level is not Completable, The AI fell at node " + (GetComponent<AIMove>().nodeNumber - 1).ToString(), "OK");
+        }
+
+        if(other.CompareTag("death") && !GetComponent<AIMove>().enabled)
+        {
+            Scene scene = SceneManager.GetActiveScene();
+            SceneManager.LoadScene(scene.name);
         }
     }
 

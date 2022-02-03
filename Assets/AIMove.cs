@@ -128,7 +128,7 @@ public class AIMove : MonoBehaviour
     {
         canMove = false;
         float dist = Vector2.Distance(nodeList[nodeNumber - 1].position,nodeList[nodeNumber].position);
-        if(dist < 7)
+        if(dist < 5)
         {
             canMove = true;
             player.Jump();

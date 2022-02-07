@@ -6,8 +6,14 @@ using UnityEngine.SceneManagement;
 
 public class CollisionEvents : MonoBehaviour
 {
-
+    List<Transform> nodes;
     public GameObject keyObj;
+
+    private void Start()
+    {
+        nodes = GetComponent<AIMove>().nodeList;
+    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("jump") && GetComponent<PlayerMovement>().GroundCheck())
@@ -31,7 +37,15 @@ public class CollisionEvents : MonoBehaviour
         if (other.CompareTag("death") && GetComponent<AIMove>().enabled == true)
         {
             UnityEditor.EditorApplication.isPlaying = false;
-            EditorUtility.DisplayDialog("Message", "Level is not Completable, The AI fell at node " + (GetComponent<AIMove>().nodeNumber - 1).ToString(), "OK");
+            int nodeNumber = GetComponent<AIMove>().nodeNumber - 1;
+            if (nodes[nodeNumber].GetComponent<Node>().type == Node.NodeType.RISING)
+            {
+                RisingWarning();
+            }
+            else if(nodes[nodeNumber].GetComponent<Node>().type == Node.NodeType.JUMP)
+            {
+                JumpWarning();
+            }
         }
 
         if(other.CompareTag("death") && !GetComponent<AIMove>().enabled)
@@ -39,6 +53,37 @@ public class CollisionEvents : MonoBehaviour
             Scene scene = SceneManager.GetActiveScene();
             SceneManager.LoadScene(scene.name);
         }
+    }
+
+    void JumpWarning()
+    {
+        int nodeNumber = GetComponent<AIMove>().nodeNumber - 1;
+        if(Vector2.Distance(nodes[nodeNumber].position, nodes[nodeNumber+1].position) > 8)
+        {
+            DisplayMessage("Jump failed between nodes " + nodeNumber.ToString() + " and " + (nodeNumber + 1).ToString() + ", consider decreasing the distance between these platforms");
+        }
+        
+
+    }
+
+    void RisingWarning()
+    {
+        int nodeNumber = GetComponent<AIMove>().nodeNumber - 1;
+        if (nodes[nodeNumber+1].parent.GetComponent<Rising>().waitTime < 1)
+        {
+            DisplayMessage("Level is not Completable, the AI fell at node " + (nodeNumber).ToString() + " consider increasing the wait time of the rising platform");
+        }
+        else if(nodes[nodeNumber+1].parent.GetComponent<Rising>().moveTime > 10)
+        {
+            DisplayMessage("Level is not Completable, the AI fell at node " + (nodeNumber).ToString() + " consider decreasing the move time of the rising platform");
+        }
+        
+        
+    }
+
+    public void DisplayMessage(string text)
+    {
+        EditorUtility.DisplayDialog("Message", text, "OK");
     }
 
     private void OnCollisionEnter2D(Collision2D other)

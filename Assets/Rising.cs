@@ -64,14 +64,14 @@ public class Rising : MonoBehaviour
             platform.platform.transform.position = new Vector3(platform.platform.transform.position.x, platform.platform.transform.position.y + moveTime * Time.deltaTime, platform.platform.transform.position.z);
         }
 
-        if (Vector2.Distance(platform.platform.transform.position, platform.endPos) < 0.1f && state == State.DOWN)
+        if (Vector2.Distance(platform.platform.transform.position, platform.endPos) < 0.2f && state == State.DOWN)
         {
             waitTimer = waitTime;
             prevState = state;
             state = State.WAIT;
         }
 
-        if (Vector2.Distance(platform.platform.transform.position, platform.startPos) < 0.1f && state == State.UP)
+        if (Vector2.Distance(platform.platform.transform.position, platform.startPos) < 0.2f && state == State.UP)
         {
             waitTimer = waitTime;
             prevState = state;

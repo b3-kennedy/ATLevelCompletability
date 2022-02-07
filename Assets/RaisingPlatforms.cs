@@ -14,17 +14,29 @@ public class RaisingPlatforms : MonoBehaviour
     {
         currentPlatform = 1;
         platforms[0].GetComponent<Rising>().startTimer = true;
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(currentPlatform > 0)
+        for (int i = 0; i < platforms.Count; i++)
         {
-            if (platforms[currentPlatform - 1].GetComponent<Rising>().state == Rising.State.DOWN) 
+            if (i > 0)
             {
-                platforms[currentPlatform].GetComponent<Rising>().startTimer = true;
+                if (platforms[i - 1].GetComponent<Rising>().state == Rising.State.DOWN)
+                {
+                    platforms[i].GetComponent<Rising>().startTimer = true;
+                }
             }
         }
+
+        //foreach (var platform in platforms)
+        //{
+
+        //    currentPlatform++;
+        //}
+        //currentPlatform = 1;
+
     }
 }

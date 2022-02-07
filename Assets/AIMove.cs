@@ -17,6 +17,8 @@ public class AIMove : MonoBehaviour
     bool rising;
     bool platformWait;
     bool inc;
+    float waitTimer;
+    public float maxPlatformWaitTime;
     // Start is called before the first frame update
     void Start()
     {
@@ -112,7 +114,7 @@ public class AIMove : MonoBehaviour
     void Rising()
     {
         Debug.Log(nodeList[nodeNumber].transform.parent);
-        if(nodeList[nodeNumber].transform.parent.GetComponent<Rising>().state == global::Rising.State.UP)
+        if(nodeList[nodeNumber].transform.parent.GetComponent<Rising>().state == global::Rising.State.UP && nodeList[nodeNumber].transform.position.y > -13.88f)
         {
             canMove = true;
             player.Jump();
@@ -149,6 +151,13 @@ public class AIMove : MonoBehaviour
         }
         else
         {
+            waitTimer += Time.deltaTime;
+            Debug.Log(waitTimer);
+            if (waitTimer >= maxPlatformWaitTime)
+            {
+                GetComponent<CollisionEvents>().DisplayMessage("Player has been waiting for longer than " + maxPlatformWaitTime.ToString()  +" seconds for moving platform");
+                waitTimer = 0;
+            }
             canMove = false;
         }
         
